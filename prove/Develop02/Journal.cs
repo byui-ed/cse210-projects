@@ -1,12 +1,22 @@
 public class journal
 {
-    public string _Write;
-    public string _Display;
-    public string _Load;
-    public string _Save;
-    public string _Quit;
-    public string _Act;
-    public string _DateTime;
-    public int _numbers;
+    public List<Entry> _entries = new List<Entry>();
+
+    public void AddEntry (Entry newEntry)
+    {
+        // Put newEntry into _entries
+    }
+    public void DisplayAll()
+    {
+
+    }
+    public void SaveToFile(string file)
+    {
+    
+    }
+    public void LoadFromFile(string file)
+    {
+
+    }
 
 }
