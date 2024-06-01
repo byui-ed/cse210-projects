@@ -11,94 +11,59 @@ public abstract class Activity
         Minutes = minutes;
     }
 
-    protected abstract decimal GetDistance();
-    protected abstract decimal GetSpeed();
-    protected abstract decimal GetPace();
-
     public override string ToString()
     {
-        return $"{Date} - Activity ({Minutes} min)";
+        return string.Format("{0} - Activity ({1} min)", Date, Minutes);
     }
 
-    protected virtual string GetSummary()
-    {
-        return $"{Date} - Activity ({Minutes} min)\nDistance: {(GetDistance():F2)} km\nSpeed: {(GetSpeed():F2)} kph\nPace: {(GetPace():F2)} min per km";
-    }
+    public abstract string GetSummary();
 }
 
-public class Running : Activity
+public class RunningActivity : Activity
 {
     protected decimal Distance;
 
-    protected Running(DateTime date, int minutes, decimal distance)
+    public RunningActivity(DateTime date, int minutes, decimal distance)
         : base(date, minutes)
     {
         Distance = distance;
     }
 
-    protected override decimal GetDistance()
+    public override string GetSummary()
     {
-        return Distance;
-    }
-
-    protected override decimal GetSpeed()
-    {
-        return (Distance / Minutes) * 60;
-    }
-
-    protected override decimal GetPace()
-    {
-        return Minutes / Distance;
+        return $"{base.ToString()}\nDistance: {Distance.ToString("F2")} km\nSpeed: {(Distance / Minutes) * 60:0.##} kph\nPace: {(Minutes / Distance):0.##} min per km";
     }
 }
 
-public class Cycling : Activity
+public class CyclingActivity : Activity
 {
     protected decimal Speed;
 
-    protected Cycling(DateTime date, int minutes, decimal speed)
+    public CyclingActivity(DateTime date, int minutes, decimal speed)
         : base(date, minutes)
     {
         Speed = speed;
     }
 
-    protected override decimal GetDistance()
+    public override string GetSummary()
     {
-        return (Speed / Minutes) * 60;
-    }
-
-    protected override decimal GetSpeed()
-    {
-        return Speed;
-    }
-
-    protected override decimal GetPace()
-    {
-        return (60 / Speed);
+        return $"{base.ToString()}\nDistance: {(Speed / Minutes) * 60:0.##} km\nSpeed: {Speed:0.##} kph\nPace: {(60 / Speed):0.##} min per km";
     }
 }
 
-public class Swimming : Activity
+public class SwimmingActivity : Activity
 {
     protected int Laps;
 
-    protected Swimming(DateTime date, int minutes, int laps)
+    public SwimmingActivity(DateTime date, int minutes, int laps)
         : base(date, minutes)
     {
         Laps = laps;
     }
 
-    protected override decimal GetDistance()
+    public override string GetSummary()
     {
-        return Laps * 50 / 1000m;
-    }
-
-    protected override decimal GetSpeed()
-    {
-        // speed calculation here
-        // same for pace calculation here
-        // implement the rest of the logic for swimming activity here
-        throw new NotImplementedException();
+        return $"{base.ToString()}\nDistance: {(Laps * 50 / 1000m):F2} km\nSpeed: ??? (Not Implemented)\nPace: ??? (Not Implemented)";
     }
 }
 
@@ -106,16 +71,16 @@ class Program
 {
     static void Main(string[] args)
     {
-        Activity runningActivity1 = new Running(DateTime.Now, 30, 4.8m);
+        Activity runningActivity1 = new RunningActivity(DateTime.Now, 30, 4.8m);
         Console.WriteLine(runningActivity1.ToString());
         Console.WriteLine(runningActivity1.GetSummary());
 
-        Activity cyclingActivity1 = new Cycling(DateTime.Now, 45, 25.5m);
+        Activity cyclingActivity1 = new CyclingActivity(DateTime.Now, 45, 25.5m);
         Console.WriteLine(cyclingActivity1.ToString());
         Console.WriteLine(cyclingActivity1.GetSummary());
 
-        Activity swimmingActivity1 = new Swimming(DateTime.Now, 20, 5);
+        Activity swimmingActivity1 = new SwimmingActivity(DateTime.Now, 20, 5);
         Console.WriteLine(swimmingActivity1.ToString());
         Console.WriteLine(swimmingActivity1.GetSummary());
-     }
+    }
 }
