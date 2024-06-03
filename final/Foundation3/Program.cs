@@ -1,4 +1,4 @@
- public class Event
+public class Event
 {
     public string Title { get; set; }
     public string Description { get; set; }
@@ -136,7 +136,7 @@ class Program
        Console.WriteLine(receptionEvent.GetShortDescription());
 
        Console.WriteLine(outdoorGatheringEvent.GetStandardDetails());
-       // outdoorGatheringEvent.GetFullDetails(); // This will throw an exception because GetFullDetails is not implemented
-       // outdoorGatheringEvent.GetShortDescription(); // This will throw an exception because GetShortDescription is not implemented
+       Console.WriteLine(outdoorGatheringEvent.GetFullDetails());
+       Console.WriteLine(outdoorGatheringEvent.GetShortDescription());
    }
 }
