@@ -1,3 +1,5 @@
+using System;
+
 public class Event
 {
     public string Title { get; set; }
@@ -16,11 +18,12 @@ public class Event
         throw new NotImplementedException();
     }
 
-    public virtual string GetShortDescription()
-    {
-        throw new NotImplementedException();
-    }
+public virtual string GetShortDescription()
+{
+    return $"Title: {Title}";
 }
+}
+
 
 public class Lecture : Event
 {
@@ -29,12 +32,12 @@ public class Lecture : Event
 
     public override string GetFullDetails()
     {
-        return base.GetFullDetails() + $"Speaker: {SpeakerName}, Capacity: {Capacity}";
+        return base.GetStandardDetails() + $", Speaker: {SpeakerName}, Capacity: {Capacity}";
     }
 
     public override string GetShortDescription()
     {
-        return base.GetShortDescription() + $"Speaker: {SpeakerName}";
+        return $"Title: {Title}, Speaker: {SpeakerName}";
     }
 }
 
@@ -44,7 +47,7 @@ public class Reception : Event
 
     public override string GetFullDetails()
     {
-        return base.GetFullDetails() + $"RSVP Email: {RSVPEmail}";
+        return base.GetStandardDetails() + $", RSVP Email: {RSVPEmail}";
     }
 }
 
@@ -76,67 +79,67 @@ public class Address
 
 class Program
 {
-   static void Main(string[] args)
-   {
-       Event lectureEvent = new Lecture() 
-       {
-           Title = "Lecture Event",
-           Description = "This is a lecture event",
-           Date = DateTime.Now,
-           Time = TimeSpan.FromHours(10),
-           Address = new Address() 
-           {
-               StreetAddress = "123 Main St",
-               City = "Anytown",
-               StateProvince = "CA",
-               Country = "USA"
-           },
-           SpeakerName = "John Doe",
-           Capacity = 100
-       };
+    static void Main(string[] args)
+    {
+        Event lectureEvent = new Lecture()
+        {
+            Title = "Lecture Event",
+            Description = "This is a lecture event",
+            Date = DateTime.Now,
+            Time = TimeSpan.FromHours(10),
+            Address = new Address()
+            {
+                StreetAddress = "123 Main St",
+                City = "Anytown",
+                StateProvince = "CA",
+                Country = "USA"
+            },
+            SpeakerName = "John Doe",
+            Capacity = 100
+        };
 
-       Event receptionEvent = new Reception() 
-       {
-           Title = "Reception Event",
-           Description = "This is a reception event",
-           Date = DateTime.Now,
-           Time = TimeSpan.FromHours(10),
-           Address = new Address() 
-           {
-               StreetAddress = "123 Main St",
-               City = "Anytown",
-               StateProvince = "CA",
-               Country = "USA"
-           },
-           RSVPEmail = "john.doe@example.com"
-       };
+        Event receptionEvent = new Reception()
+        {
+            Title = "Reception Event",
+            Description = "This is a reception event",
+            Date = DateTime.Now,
+            Time = TimeSpan.FromHours(10),
+            Address = new Address()
+            {
+                StreetAddress = "123 Main St",
+                City = "Anytown",
+                StateProvince = "CA",
+                Country = "USA"
+            },
+            RSVPEmail = "john.doe@example.com"
+        };
 
-       Event outdoorGatheringEvent = new OutdoorGathering() 
-       {
-           Title = "Outdoor Gathering Event",
-           Description = "This is an outdoor gathering event",
-           Date = DateTime.Now,
-           Time = TimeSpan.FromHours(10),
-           Address = new Address() 
-           {
-               StreetAddress = "123 Main St",
-               City = "Anytown",
-               StateProvince = "CA",
-               Country = "USA"
-           },
-           // weather forecast code here
-       };
+        Event outdoorGatheringEvent = new OutdoorGathering()
+        {
+            Title = "Outdoor Gathering Event",
+            Description = "This is an outdoor gathering event",
+            Date = DateTime.Now,
+            Time = TimeSpan.FromHours(10),
+            Address = new Address()
+            {
+                StreetAddress = "123 Main St",
+                City = "Anytown",
+                StateProvince = "CA",
+                Country = "USA"
+            }
+            // weather forecast code here
+        };
 
-       Console.WriteLine(lectureEvent.GetStandardDetails());
-       Console.WriteLine(lectureEvent.GetFullDetails());
-       Console.WriteLine(lectureEvent.GetShortDescription());
+        Console.WriteLine(lectureEvent.GetStandardDetails());
+        Console.WriteLine(lectureEvent.GetFullDetails());
+        Console.WriteLine(lectureEvent.GetShortDescription());
 
-       Console.WriteLine(receptionEvent.GetStandardDetails());
-       Console.WriteLine(receptionEvent.GetFullDetails());
-       Console.WriteLine(receptionEvent.GetShortDescription());
+        Console.WriteLine(receptionEvent.GetStandardDetails());
+        Console.WriteLine(receptionEvent.GetFullDetails());
+        Console.WriteLine(receptionEvent.GetShortDescription());
 
-       Console.WriteLine(outdoorGatheringEvent.GetStandardDetails());
-       Console.WriteLine(outdoorGatheringEvent.GetFullDetails());
-       Console.WriteLine(outdoorGatheringEvent.GetShortDescription());
-   }
+        Console.WriteLine(outdoorGatheringEvent.GetStandardDetails());
+        // outdoorGatheringEvent.GetFullDetails(); // This will throw an exception because GetFullDetails is not implemented
+        // outdoorGatheringEvent.GetShortDescription(); // This will throw an exception because GetShortDescription is not implemented
+    }
 }
